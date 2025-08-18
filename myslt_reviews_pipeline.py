@@ -9,7 +9,7 @@ Original file is located at
 # 1. Scraping MYSLT App Reviews
 """
 
-!pip install google-play-scraper pandas  # Installs Python packages,scrape Google Play Store reviews,DataFrames
+# !pip install google-play-scraper pandas  # Installs Python packages,scrape Google Play Store reviews,DataFrames
 from google_play_scraper import reviews_all, Sort #fetch all available reviews,sort reviews
 import pandas as pd
 
@@ -42,7 +42,7 @@ for review in reviews:
     print(f"Review: {review['content']}")
     print("-" * 20)
 
-!pip install app_store_scraper
+# !pip install app_store_scraper
 
 import requests
 import pandas as pd
@@ -84,7 +84,7 @@ for review in app_reviews[:5]:
 
 """# Detect and Translate Sinhala Reviews"""
 
-!pip install langdetect deep-translator pandas
+# !pip install langdetect deep-translator pandas
 
 import pandas as pd
 from langdetect import detect
@@ -159,7 +159,7 @@ if __name__ == "__main__":
 
 """# Model Used (AI Technology)"""
 
-!pip install transformers pandas
+# !pip install transformers pandas
 
 from transformers import pipeline
 import pandas as pd
