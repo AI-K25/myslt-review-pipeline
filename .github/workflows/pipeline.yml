@@ -23,4 +23,4 @@ jobs:
 
       - name: Run pipeline
         run: |
-          python myslt_reviews_pipeline.ipynb
+          python myslt_reviews_pipeline.py
