@@ -6,4 +6,4 @@ requests
 langdetect
 deep-translator
 transformers
-torch
+torch==2.3.0
