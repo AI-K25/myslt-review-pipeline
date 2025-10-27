@@ -59,4 +59,4 @@ jobs:
             MYSLT Bot
           attachments: |
             feature_requests_summary.csv
-            
+            categorized_feature_requests.csv
