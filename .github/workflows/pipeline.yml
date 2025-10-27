@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Daily Feature Requests Summary - MYSLT App"
-          to: "yehanmanodya12@gmail.com"
+          to: "yehanmanodya12@gmail.com ,kaveeshanirmani25@gmail.com"
           from: "MYSLT Bot <${{ secrets.EMAIL_USERNAME }}>"
           body: |
             Hello Team,
@@ -53,9 +53,10 @@ jobs:
             Please find attached the latest feature requests summary extracted from app reviews.
 
             You can also view the full interactive dashboard here:
-            👉 https://your-streamlit-app-url
+            👉 http://124.43.216.136:8501/review/
 
             Best,
             MYSLT Bot
           attachments: |
             feature_requests_summary.csv
+            
