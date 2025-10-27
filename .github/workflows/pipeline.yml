@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Daily Feature Requests Summary - MYSLT App"
-          to: "developer@example.com"
+          to: "yehanmanodya12@gmail.com"
           from: "MYSLT Bot <${{ secrets.EMAIL_USERNAME }}>"
           body: |
             Hello Team,
