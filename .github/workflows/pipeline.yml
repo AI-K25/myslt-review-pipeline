@@ -61,13 +61,12 @@
 #             feature_requests_summary.csv
 #             categorized_feature_requests.csv
 
-
 name: Run MYSLT Reviews Pipeline
 
 on:
   schedule:
     - cron: "30 2 * * *"   # Every day at 8:00 AM Sri Lanka time (UTC+5:30)
-  workflow_dispatch:        # Allow manual trigger
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -94,11 +93,20 @@ jobs:
         run: python myslt_reviews_pipeline.py
 
       - name: Commit and Push Updated CSVs
+        id: commit_check
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add feature_requests_only.csv categorized_feature_requests.csv feature_requests_summary.csv || echo "No CSVs to add"
-          git diff --quiet && echo "No changes to commit" || (git commit -m "Update feature request CSVs [skip ci]" && git push)
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            echo "changes=false" >> $GITHUB_ENV
+          else
+            git commit -m "Update feature request CSVs [skip ci]"
+            git push
+            echo "changes=true" >> $GITHUB_ENV
+          fi
 
       - name: Check if 30 days have passed since last email
         id: check_email_time
@@ -117,16 +125,16 @@ jobs:
               echo "send_email=false" >> $GITHUB_ENV
             fi
           fi
-          
+
       - name: Build email note
         id: email_note
         run: |
           if [ "$changes" == "true" ]; then
-            echo "update_note= New feature request data has been added since the last run." >> $GITHUB_ENV
+            echo "update_note=New feature request data has been added since the last run." >> $GITHUB_ENV
           else
-            echo "update_note= No new updates detected — CSVs are unchanged since the previous cycle." >> $GITHUB_ENV
+            echo "update_note=No new updates detected — CSVs are unchanged since the previous cycle." >> $GITHUB_ENV
           fi
-          
+
       - name: Send Email with Feature Requests Summary
         if: env.send_email == 'true'
         uses: dawidd6/action-send-mail@v3
@@ -142,12 +150,13 @@ jobs:
             Hello Team,
 
             Please find attached the latest **monthly feature requests summary extracted from app reviews.**
+            
             ${{ env.update_note }}
 
             You can also view the full interactive dashboard here:
             👉 http://124.43.216.136:8501/review/
 
-            Best,
+            Best regards,
             MYSLT Bot
           attachments: |
             feature_requests_summary.csv
