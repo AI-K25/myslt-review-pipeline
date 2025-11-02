@@ -140,6 +140,11 @@ jobs:
           else
             echo "update_note=No new updates detected — CSVs are unchanged since the previous cycle." >> $GITHUB_ENV
           fi
+          
+      - name: Force Send Email (Temporary for Testing)
+        run: |
+          echo "send_email=true" >> $GITHUB_ENV
+          
 
       - name: Send Email with Feature Requests Summary
         if: env.send_email == 'true'
