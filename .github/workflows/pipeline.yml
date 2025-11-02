@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Daily Feature Requests Summary - MYSLT App"
-          to: "yehanmanodya12@gmail.com ,kaveeshanirmani25@gmail.com ,jana@slt.com.lk"
+          to: "kaveeshanirmani25@gmail.com "
           from: "MYSLT Bot <${{ secrets.EMAIL_USERNAME }}>"
           body: |
             Hello Team,
