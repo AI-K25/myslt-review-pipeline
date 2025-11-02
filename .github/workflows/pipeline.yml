@@ -108,11 +108,13 @@ jobs:
             echo "changes=true" >> $GITHUB_ENV
           fi
 
-      - name: Get Last Updated Date
+      - name: Get Last Updated Date in SLST
         id: last_updated
         run: |
-          LAST_UPDATED=$(git log -1 --format=%cd --date=format:"%Y-%m-%d %H:%M")
-          echo "last_updated=$LAST_UPDATED" >> $GITHUB_ENV
+          LAST_UPDATED_UTC=$(git log -1 --format=%cd --date=format:"%Y-%m-%d %H:%M")
+          LAST_UPDATED_SLST=$(date -d "$LAST_UPDATED_UTC UTC +5 hours 30 minutes" "+%Y-%m-%d %H:%M")
+          echo "last_updated=$LAST_UPDATED_SLST" >> $GITHUB_ENV
+
 
       - name: Check if 30 days have passed since last email
         id: check_email_time
@@ -160,11 +162,11 @@ jobs:
           body: |
             Hello Team,
 
-            Please find attached the latest **monthly feature requests summary extracted from app reviews.**
+            Please find attached the latest monthly feature requests summary extracted from app reviews.
             
             ${{ env.update_note }}
 
-            Last data update: **${{ env.last_updated }} (UTC)**
+            Last data update: **${{ env.last_updated }} (SLST)**
 
             You can also view the full interactive dashboard here:
             👉 http://124.43.216.136:8501/review/
