@@ -111,8 +111,8 @@ jobs:
       - name: Get Last Updated Date in SLST
         id: last_updated
         run: |
-          LAST_UPDATED_UTC=$(git log -1 --format=%cd --date=format:"%Y-%m-%d %H:%M")
-          LAST_UPDATED_SLST=$(date -d "$LAST_UPDATED_UTC UTC +5 hours 30 minutes" "+%Y-%m-%d %H:%M")
+          LAST_UPDATED_UTC=$(git log -1 --format=%cd --date=iso-strict)
+          LAST_UPDATED_SLST=$(date -u -d "$LAST_UPDATED_UTC +5 hours 30 minutes" "+%Y-%m-%d %H:%M")
           echo "last_updated=$LAST_UPDATED_SLST" >> $GITHUB_ENV
 
 
