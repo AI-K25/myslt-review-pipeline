@@ -117,7 +117,16 @@ jobs:
               echo "send_email=false" >> $GITHUB_ENV
             fi
           fi
-
+          
+      - name: Build email note
+        id: email_note
+        run: |
+          if [ "$changes" == "true" ]; then
+            echo "update_note= New feature request data has been added since the last run." >> $GITHUB_ENV
+          else
+            echo "update_note= No new updates detected — CSVs are unchanged since the previous cycle." >> $GITHUB_ENV
+          fi
+          
       - name: Send Email with Feature Requests Summary
         if: env.send_email == 'true'
         uses: dawidd6/action-send-mail@v3
@@ -127,12 +136,13 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Monthly Feature Requests Summary - MYSLT App"
-          to: "kaveeshanirmani25@gmail.com,yehanmanodya12@gmail.com,jana@slt.com.lk"
+          to: "kaveeshanirmani25@gmail.com"
           from: "MYSLT Bot <${{ secrets.EMAIL_USERNAME }}>"
           body: |
             Hello Team,
 
-            Please find attached the latest **monthly** feature requests summary extracted from app reviews.
+            Please find attached the latest **monthly feature requests summary extracted from app reviews.**
+            ${{ env.update_note }}
 
             You can also view the full interactive dashboard here:
             👉 http://124.43.216.136:8501/review/
